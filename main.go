@@ -27,8 +27,8 @@ var (
 
 func main() {
 	pps := plugin.NewSet()
-	pps.RegisterProvisioner("chef-client", new(chefclient.Provisioner))
-	pps.RegisterProvisioner("chef-solo", new(chefsolo.Provisioner))
+	pps.RegisterProvisioner("client", new(chefclient.Provisioner))
+	pps.RegisterProvisioner("solo", new(chefsolo.Provisioner))
 	pps.SetVersion(PluginVersion)
 	err := pps.Run()
 	if err != nil {
