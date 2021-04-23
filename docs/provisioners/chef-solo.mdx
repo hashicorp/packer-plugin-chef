@@ -134,49 +134,7 @@ configuration is actually required, but at least `run_list` is recommended.
 
 @include 'provisioners/common-config.mdx'
 
-##### Node Attribute Mapping
-
-An arbitrary mapping of JSON that will be available as node attributes while running Chef.
-
-<Tabs>
-<Tab heading="HCL2">
-
-- `json_string` (string) - The JSON string can be encoded using the [jsonencode](/docs/templates/hcl_templates/functions/encoding/jsonencode)
-  template function.
-
-```hcl
-provisioner "chef-solo" {
-  json_string = jsonencode({
-    "a" = "b"
-    "foo" = {
-      "bar" = "val"
-      "number" = 1
-    }
-  })
-}
-```
-
-</Tab>
-
-<Tab heading="JSON">
-
-- `json` (object) - This option is only available to old-style JSON templates.
-
-```json
-"provisioners":[{
-  "type": "chef-solo",
-  "json": {
-    "a": "b",
-    "foo": {
-      "bar": "val",
-      "number": 1
-    }
-  }
-}]
-```
-
-</Tab>
-</Tabs>
+@include 'provisioners/node-attribute-mapping.mdx'
 
 ## Chef Configuration
 

@@ -30,12 +30,28 @@ installed, using the official Chef installers provided by Chef.
 The example below is fully functional. It will install Chef onto the remote
 machine and run Chef client.
 
-```json
-{
-  "type": "chef-client",
-  "server_url": "https://mychefserver.com/"
+<Tabs>
+<Tab heading="HCL2">
+
+```hcl
+provisioner "chef-client" {
+    server_url = "https://mychefserver.com/"
 }
 ```
+
+</Tab>
+
+<Tab heading="JSON">
+
+```json
+"provisioners":[{
+    "type": "chef-client",
+    "server_url": "https://mychefserver.com/"
+}]
+```
+
+</Tab>
+</Tabs>
 
 Note: to properly clean up the Chef node and client the machine on which packer
 is running must have knife on the path and configured globally, i.e,
@@ -85,9 +101,6 @@ configuration is actually required.
 - `install_command` (string) - The command used to install Chef. This has
   various [configuration template variables](/docs/templates/legacy_json_templates/engine)
   available. See below for more information.
-
-- `json` (object) - An arbitrary mapping of JSON that will be available as
-  node attributes while running Chef.
 
 - `knife_command` (string) - The command used to run Knife during node
   clean-up. This has various [configuration template
@@ -161,6 +174,8 @@ configuration is actually required.
   is empty which will install the latest version of Chef.
 
 @include 'provisioners/common-config.mdx'
+
+@include 'provisioners/node-attribute-mapping.mdx'
 
 ## Chef Configuration
 

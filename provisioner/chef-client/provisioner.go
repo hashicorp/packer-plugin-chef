@@ -50,7 +50,12 @@ var guestOSTypeConfigs = map[string]guestOSTypeConfig{
 type Config struct {
 	common.PackerConfig `mapstructure:",squash"`
 
-	Json map[string]interface{}
+	// HCL cannot be decoded into an interface so for HCL templates you must use the JsonString option,
+	// To be used with https://www.packer.io/docs/templates/hcl_templates/functions/encoding/jsonencode
+	// ref: https://github.com/hashicorp/hcl/issues/291#issuecomment-496347585
+	JsonString string `mapstructure:"json_string"`
+	// For JSON templates we keep the map[string]interface{}
+	Json map[string]interface{} `mapstructure:"json" mapstructure-to-hcl2:",skip"`
 
 	ChefEnvironment            string   `mapstructure:"chef_environment"`
 	ChefLicense                string   `mapstructure:"chef_license"`
@@ -140,6 +145,12 @@ func (p *Provisioner) Prepare(raws ...interface{}) error {
 	}, raws...)
 	if err != nil {
 		return err
+	}
+
+	if p.config.JsonString != "" {
+		if err := json.Unmarshal([]byte(p.config.JsonString), &p.config.Json); err != nil {
+			return fmt.Errorf("Failed to unmarshal 'json_string': %s", err.Error())
+		}
 	}
 
 	if p.config.GuestOSType == "" {

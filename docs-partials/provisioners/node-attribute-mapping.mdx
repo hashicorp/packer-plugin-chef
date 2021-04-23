@@ -1,0 +1,38 @@
+##### Node Attribute Mapping
+
+An arbitrary mapping of JSON that will be available as node attributes while running Chef.
+
+<Tabs>
+<Tab heading="HCL2">
+
+- `json_string` (string) - The JSON string can be encoded using the [jsonencode](/docs/templates/hcl_templates/functions/encoding/jsonencode)
+  template function.
+
+```hcl
+  json_string = jsonencode({
+    "a" = "b"
+    "foo" = {
+      "bar" = "val"
+      "number" = 1
+    }
+  })
+```
+
+</Tab>
+
+<Tab heading="JSON">
+
+- `json` (object) - This option is only available to old-style JSON templates.
+
+```json
+  "json": {
+    "a": "b",
+    "foo": {
+      "bar": "val",
+      "number": 1
+    }
+  }
+```
+
+</Tab>
+</Tabs>
