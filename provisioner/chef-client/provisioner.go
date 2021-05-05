@@ -72,6 +72,7 @@ type Config struct {
 	PolicyGroup                string   `mapstructure:"policy_group"`
 	PolicyName                 string   `mapstructure:"policy_name"`
 	PreventSudo                bool     `mapstructure:"prevent_sudo"`
+	RubygemsURL                string   `mapstructure:"rubygems_url"`
 	RunList                    []string `mapstructure:"run_list"`
 	ServerUrl                  string   `mapstructure:"server_url"`
 	SkipCleanClient            bool     `mapstructure:"skip_clean_client"`
@@ -104,6 +105,7 @@ type ConfigTemplate struct {
 	NodeName                   string
 	PolicyGroup                string
 	PolicyName                 string
+	RubygemsURL                string
 	ServerUrl                  string
 	SslVerifyMode              string
 	TrustedCertsDir            string
@@ -313,7 +315,8 @@ func (p *Provisioner) Provision(ctx context.Context, ui packersdk.Ui, comm packe
 		p.config.PolicyGroup,
 		p.config.PolicyName,
 		p.config.SslVerifyMode,
-		p.config.TrustedCertsDir)
+		p.config.TrustedCertsDir,
+		p.config.RubygemsURL)
 	if err != nil {
 		return fmt.Errorf("Error creating Chef config file: %s", err)
 	}
@@ -386,7 +389,8 @@ func (p *Provisioner) createConfig(
 	policyGroup string,
 	policyName string,
 	sslVerifyMode string,
-	trustedCertsDir string) (string, error) {
+	trustedCertsDir string,
+	rubygemsURL string) (string, error) {
 
 	ui.Message("Creating configuration file 'client.rb'")
 
@@ -418,6 +422,7 @@ func (p *Provisioner) createConfig(
 		ChefEnvironment:            chefEnvironment,
 		PolicyGroup:                policyGroup,
 		PolicyName:                 policyName,
+		RubygemsURL:                rubygemsURL,
 		SslVerifyMode:              sslVerifyMode,
 		TrustedCertsDir:            trustedCertsDir,
 		EncryptedDataBagSecretPath: encryptedDataBagSecretPath,
@@ -775,6 +780,9 @@ ssl_verify_mode :{{.SslVerifyMode}}
 {{end}}
 {{if ne .TrustedCertsDir ""}}
 trusted_certs_dir "{{.TrustedCertsDir}}"
+{{end}}
+{{if ne .RubygemsURL ""}}
+rubygems_url "{{.RubygemsURL}}"
 {{end}}
 `
 

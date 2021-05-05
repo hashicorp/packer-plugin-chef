@@ -39,6 +39,23 @@ func TestProvisionerPrepare_chefEnvironment(t *testing.T) {
 	}
 }
 
+func TestProvisionerPrepare_rubygemsURL(t *testing.T) {
+	var p Provisioner
+
+	config := testConfig()
+	rubygemsURL := "https://rubygems.org"
+	config["rubygems_url"] = rubygemsURL
+
+	err := p.Prepare(config)
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	if p.config.RubygemsURL != rubygemsURL {
+		t.Fatalf("unexpected: %#v", p.config.RubygemsURL)
+	}
+}
+
 func TestProvisionerPrepare_configTemplate(t *testing.T) {
 	var err error
 	var p Provisioner

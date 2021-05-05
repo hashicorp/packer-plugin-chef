@@ -121,6 +121,10 @@ configuration is actually required.
   then the sudo will be omitted. This has no effect when guest_os_type is
   windows.
 
+- `rubygems_url` (string) - The url of a rubygems source used by the Chef Infra
+  Client when installing gems that cookbooks depend on. This should only be set
+  if you want to override the Chef Infra Client default value.
+
 - `run_list` (array of strings) - The [run
   list](https://docs.chef.io/run_lists) for Chef.
   By default this is empty, and will use the run list sent down by the Chef
