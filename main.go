@@ -7,8 +7,8 @@ import (
 	chefclient "github.com/hashicorp/packer-plugin-chef/provisioner/chef-client"
 	chefsolo "github.com/hashicorp/packer-plugin-chef/provisioner/chef-solo"
 
+	"github.com/hashicorp/packer-plugin-chef/version"
 	"github.com/hashicorp/packer-plugin-sdk/plugin"
-	"github.com/hashicorp/packer-plugin-sdk/version"
 )
 
 func main() {
