@@ -1,3 +1,8 @@
+## 1.0.2 (October 27, 2021)
+
+* Update packer-plugin-sdk to v0.2.7 [GH-36]
+* Update to use Go 1.17
+
 ## 1.0.1 (June 14, 2021)
 
 * Add module retraction for v0.0.1 as it was a bad release.
